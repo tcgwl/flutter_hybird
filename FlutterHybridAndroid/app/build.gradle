@@ -1,10 +1,10 @@
 apply plugin: 'com.android.application'
 
-def localProperties = new Properties()
-def localPropertiesFile = rootProject.file('local.properties')
-if (localPropertiesFile.exists()) {
-    localPropertiesFile.withReader('UTF-8') { reader ->
-        localProperties.load(reader)
+def keystoreProperties = new Properties()
+def keystorePropertiesFile = rootProject.file('keystore.properties')
+if (keystorePropertiesFile.exists()) {
+    keystorePropertiesFile.withReader('UTF-8') { reader ->
+        keystoreProperties.load(reader)
     }
 }
 
@@ -27,10 +27,10 @@ android {
 
     signingConfigs {
         release {
-            storeFile file(localProperties.get('storeFile'))
-            storePassword localProperties.get('storePassword')
-            keyAlias localProperties.get('keyAlias')
-            keyPassword localProperties.get('keyPassword')
+            storeFile file(keystoreProperties.get('storeFile'))
+            storePassword keystoreProperties.get('storePassword')
+            keyAlias keystoreProperties.get('keyAlias')
+            keyPassword keystoreProperties.get('keyPassword')
             v2SigningEnabled true
         }
     }
