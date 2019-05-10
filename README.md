@@ -72,7 +72,7 @@ ft.replace(R.id.someContainer, Flutter.createFragment("{name:'thunderHou',dataLi
 ft.commit();
 ```              
 
-**Flutter要求minSdkVersion最低为16,且使用jdk1.8编译,所以Android Native项目的app/build.gradle需要进行修改**
+**Flutter要求minSdkVersion最低为16,且使用jdk1.8编译,所以Android Native项目的app/build.gradle需要进行修改.**
 
 4. 编写Dart代码
 
@@ -116,3 +116,22 @@ void main() => runApp(MyApp(initParams: window.defaultRouteName));
 
 打包过程和原生一样,在配置签名之后,运行'./gradlew assembleRelease'打包.
 
+## Flutter与Native的通信机制
+Flutter与Native的通信是通过Channel来完成的.
+
+消息使用Channel(平台通道)在客户端(UI)和主机(平台)之间传递,如下图所示:
+
+![](https://mmbiz.qpic.cn/mmbiz_png/zKFJDM5V3Wzj0Fymj5ictWZUIXTsNDQKDxUldylFuMudR8qzplP8nfvH9PD1gk2TVdyLp5WmDJ4tos8LBM8NWHw/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
+
+*Flutter中消息的传递是完全异步的.*
+
+Flutter定义了三种不同类型的Channel:
+- BasicMessageChannel: 用于传递字符串和半结构化的信息,持续通信,收到消息后可以回复此次消息,
+如:Native将遍历到的文件信息陆续传递到Dart,
+再比如:Flutter将从服务端陆续获取到的信息交给Native加工,Native处理完返回等;
+- MethodChannel: 用于传递方法调用(method invocation),一次性通信,
+如:Flutter调用Native拍照;
+- EventChannel: 用于数据流(event streams)的通信,持续通信,收到消息后无法回复此次消息.
+通常用于Native向Dart的通信,如:手机电量变化,网络连接变化,陀螺仪,传感器等;
+
+这三种类型的Channel都是全双工通信,即A<=>B.
