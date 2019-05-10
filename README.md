@@ -121,7 +121,7 @@ Flutter与Native的通信是通过Channel来完成的.
 
 消息使用Channel(平台通道)在客户端(UI)和主机(平台)之间传递,如下图所示:
 
-![](https://mmbiz.qpic.cn/mmbiz_png/zKFJDM5V3Wzj0Fymj5ictWZUIXTsNDQKDxUldylFuMudR8qzplP8nfvH9PD1gk2TVdyLp5WmDJ4tos8LBM8NWHw/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
+![](https://github.com/tcgwl/flutter_hybird/blob/master/images/methodchannel.png)
 
 *Flutter中消息的传递是完全异步的.*
 
